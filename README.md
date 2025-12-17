@@ -1,5 +1,4 @@
-[package.json](https://github.com/user-attachments/files/24213259/package.json)
-{
+[package.json](https://github.com/user-attachments/files/24213382/package.json)[Uploadi{
   "name": "bot-de-bilhetes",
   "version": "1.0.0",
   "description": "Bot de tickets Discord",
@@ -15,7 +14,7 @@
     "tsx": "^4.7.1",
     "typescript": "^5.3.3"
   }
-}
+}ng package.json…]()
 
 node_modules
 .env
