@@ -1,6 +1,6 @@
 [package.json](https://github.com/user-attachments/files/24240738/package.json)
 
-[index.js](https://github.com/user-attachments/files/24241279/index.js)
+[index.js](https://github.com/user-attachments/files/24241652/index.js)
 import 'dotenv/config';
 import { 
     Client, 
@@ -70,11 +70,13 @@ client.on(Events.InteractionCreate, async interaction => {
     if (interaction.isStringSelectMenu() && interaction.customId === 'selecionar_funcionario') {
         const funcionarioID = interaction.values[0];
         const estrelas = new ActionRowBuilder();
+        
+        // REMOVIDO O ASTERISCO E ADICIONADO A ESTRELA ⭐
         for (let i = 1; i <= 5; i++) {
             estrelas.addComponents(
                 new ButtonBuilder()
                     .setCustomId(`estrela_${i}_${funcionarioID}`)
-                    .setLabel(`${i} ⭐`)
+                    .setLabel(`${i} ⭐`) 
                     .setStyle(ButtonStyle.Primary)
             );
         }
@@ -101,8 +103,8 @@ client.on(Events.InteractionCreate, async interaction => {
         const [_, nota, funcID] = interaction.customId.split('_');
         const comentario = interaction.fields.getTextInputValue('comentario') || 'Sem comentário.';
         
-        const embedDiretoria = new EmbedBuilder()
-            .setTitle('📋 Registro de Avaliação (Diretoria)')
+        const embedFeedback = new EmbedBuilder()
+            .setTitle('📋 Registro de Avaliação')
             .addFields(
                 { name: '👨‍⚕️ Profissional', value: `<@${funcID}>`, inline: true },
                 { name: '⭐ Nota', value: `${nota}/5`, inline: true },
@@ -112,21 +114,11 @@ client.on(Events.InteractionCreate, async interaction => {
             .setColor(nota >= 4 ? '#2ecc71' : '#e74c3c')
             .setTimestamp();
 
-        const embedFuncionarios = new EmbedBuilder()
-            .setTitle('📋 Nova Avaliação Recebida')
-            .addFields(
-                { name: '👨‍⚕️ Profissional', value: `<@${funcID}>`, inline: true },
-                { name: '⭐ Nota', value: `${nota}/5`, inline: true },
-                { name: '💬 Comentário', value: comentario }
-            )
-            .setColor(nota >= 4 ? '#2ecc71' : '#e74c3c')
-            .setTimestamp();
-
         const canalDiretoria = client.channels.cache.get(CANAL_DIRETORIA_ID);
-        if (canalDiretoria) await canalDiretoria.send({ embeds: [embedDiretoria] });
+        if (canalDiretoria) await canalDiretoria.send({ embeds: [embedFeedback] });
 
         const canalPublico = client.channels.cache.get(CANAL_LOG_FUNCIONARIOS_ID);
-        if (canalPublico) await canalPublico.send({ embeds: [embedFuncionarios] });
+        if (canalPublico) await canalPublico.send({ embeds: [embedFeedback] });
 
         await interaction.reply({ content: '✅ Sua avaliação foi registrada com sucesso!', ephemeral: true });
     }
@@ -134,12 +126,12 @@ client.on(Events.InteractionCreate, async interaction => {
 
 client.login(process.env.TOKEN);
 
-// --- CÓDIGO DO SERVIDOR EXPRESS NO FINAL ---
+// --- SERVIDOR WEB NO FINAL PARA REPLIT 24/7 ---
 import express from 'express';
 const app = express();
 
 app.get('/', (req, res) => {
-  res.send('O Bot do Hospital está online!');
+  res.send('O Bot do Hospital esta online!');
 });
 
 app.listen(3000, () => {
