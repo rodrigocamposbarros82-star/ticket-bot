@@ -1,6 +1,6 @@
 [package.json](https://github.com/user-attachments/files/24240738/package.json)
 
-[index.js](https://github.com/user-attachments/files/24240751/index.js)
+[index.js](https://github.com/user-attachments/files/24241279/index.js)
 import 'dotenv/config';
 import { 
     Client, 
@@ -38,10 +38,9 @@ const funcionarios = [
     { label: 'THURZINN MASCOTE 1370', value: '1298444688239362118' }
 ];
 
-// CONFIGURAÇÃO DE CANAIS
 const CANAL_AVALIACAO_ID = '1451237259591286846'; 
 const CANAL_DIRETORIA_ID = '1451236685642993766';
-const CANAL_LOG_FUNCIONARIOS_ID = '1451236651408953464'; // Novo canal
+const CANAL_LOG_FUNCIONARIOS_ID = '1451236651408953464';
 
 client.once('ready', async () => {
     console.log(`✅ Bot online como ${client.user.tag}`);
@@ -102,9 +101,8 @@ client.on(Events.InteractionCreate, async interaction => {
         const [_, nota, funcID] = interaction.customId.split('_');
         const comentario = interaction.fields.getTextInputValue('comentario') || 'Sem comentário.';
         
-        // Criando o Embed de Log (o que aparecerá nos canais)
-        const embedFeedback = new EmbedBuilder()
-            .setTitle('📋 Registro de Avaliação')
+        const embedDiretoria = new EmbedBuilder()
+            .setTitle('📋 Registro de Avaliação (Diretoria)')
             .addFields(
                 { name: '👨‍⚕️ Profissional', value: `<@${funcID}>`, inline: true },
                 { name: '⭐ Nota', value: `${nota}/5`, inline: true },
@@ -114,13 +112,21 @@ client.on(Events.InteractionCreate, async interaction => {
             .setColor(nota >= 4 ? '#2ecc71' : '#e74c3c')
             .setTimestamp();
 
-        // 1. Enviar para a Diretoria (Log privado)
-        const canalDiretoria = client.channels.cache.get(CANAL_DIRETORIA_ID);
-        if (canalDiretoria) await canalDiretoria.send({ embeds: [embedFeedback] });
+        const embedFuncionarios = new EmbedBuilder()
+            .setTitle('📋 Nova Avaliação Recebida')
+            .addFields(
+                { name: '👨‍⚕️ Profissional', value: `<@${funcID}>`, inline: true },
+                { name: '⭐ Nota', value: `${nota}/5`, inline: true },
+                { name: '💬 Comentário', value: comentario }
+            )
+            .setColor(nota >= 4 ? '#2ecc71' : '#e74c3c')
+            .setTimestamp();
 
-        // 2. Enviar para o Canal dos Funcionários (Log compartilhado)
-        const canalFuncionarios = client.channels.cache.get(CANAL_LOG_FUNCIONARIOS_ID);
-        if (canalFuncionarios) await canalFuncionarios.send({ embeds: [embedFeedback] });
+        const canalDiretoria = client.channels.cache.get(CANAL_DIRETORIA_ID);
+        if (canalDiretoria) await canalDiretoria.send({ embeds: [embedDiretoria] });
+
+        const canalPublico = client.channels.cache.get(CANAL_LOG_FUNCIONARIOS_ID);
+        if (canalPublico) await canalPublico.send({ embeds: [embedFuncionarios] });
 
         await interaction.reply({ content: '✅ Sua avaliação foi registrada com sucesso!', ephemeral: true });
     }
@@ -128,6 +134,7 @@ client.on(Events.InteractionCreate, async interaction => {
 
 client.login(process.env.TOKEN);
 
+// --- CÓDIGO DO SERVIDOR EXPRESS NO FINAL ---
 import express from 'express';
 const app = express();
 
