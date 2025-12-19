@@ -1,6 +1,6 @@
 [package.json](https://github.com/user-attachments/files/24240738/package.json)
 
-[index.js](https://github.com/user-attachments/files/24241652/index.js)
+[index.js](https://github.com/user-attachments/files/24256568/index.js)
 import 'dotenv/config';
 import { 
     Client, 
@@ -35,7 +35,9 @@ const funcionarios = [
     { label: 'Marechal WINCHESTER 641', value: '1253369256339312781' },
     { label: 'Mateus 1041', value: '1390612126527262811' },
     { label: 'Scotin Cria 1004', value: '1282370819149926535' },
-    { label: 'THURZINN MASCOTE 1370', value: '1298444688239362118' }
+    { label: 'THURZINN MASCOTE 1370', value: '1298444688239362118' },
+    { label: 'Théo Tuguinha 744' , value: '1202319235334799433' },
+    { label: 'Abel Tuguinha 1032 ' , value: '1328022884244783238' }
 ];
 
 const CANAL_AVALIACAO_ID = '1451237259591286846'; 
