@@ -49,7 +49,6 @@ const funcionarios = [
     { label: 'Kleber 1273', value: '534397463478665236' },
     { label: 'Lauren 869', value: '1328551804031467563' },
     { label: 'Marechal WINCHESTER 641', value: '1253369256339312781' },
-    { label: 'Mateus 1041', value: '1390612126527262811' },
     { label: 'Scotin Cria 1004', value: '1282370819149926535' },
     { label: 'THURZINN MASCOTE 1370', value: '1298444688239362118' },
     { label: 'Théo Tuguinha 744', value: '1202319235334799433' },
